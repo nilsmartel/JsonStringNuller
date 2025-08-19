@@ -27,7 +27,7 @@ class JFuzzer {
     }
 
     public static String setNthStringValue(String input, int n, boolean setToNull) {
-        if (n <= 0) {
+        if (n < 0) {
             throw new IllegalArgumentException("n must be >= 0");
         }
 
@@ -49,7 +49,7 @@ class JFuzzer {
             count++;
         }
 
-        if (count < n) {
+        if (count <= n) {
             throw new IllegalArgumentException("n to large for input data");
         }
 
