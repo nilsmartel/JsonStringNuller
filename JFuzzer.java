@@ -28,7 +28,7 @@ class JFuzzer {
 
     public static String setNthStringValue(String input, int n, boolean setToNull) {
         if (n <= 0) {
-            throw new IllegalArgumentException("n must be positive (1-based index)");
+            throw new IllegalArgumentException("n must be >= 0");
         }
 
         // that only matches string values in json like "key": "value"
@@ -39,13 +39,14 @@ class JFuzzer {
         int count = 0;
 
         while (matcher.find()) {
-            count++;
             if (count == n) {
                 String replacement = setToNull ? matcher.group(1) + "null" : matcher.group(1) + "\"\"";
                 matcher.appendReplacement(result, replacement);
             } else {
                 matcher.appendReplacement(result, matcher.group(0));
             }
+
+            count++;
         }
 
         if (count < n) {
